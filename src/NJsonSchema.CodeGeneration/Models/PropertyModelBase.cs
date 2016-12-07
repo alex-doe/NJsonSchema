@@ -30,7 +30,10 @@ namespace NJsonSchema.CodeGeneration.Models
             _defaultValueGenerator = defaultValueGenerator;
             _settings = settings;
 
-            PropertyName = _settings.PropertyNameGenerator.Generate(_property); 
+            PropertyName = _settings.PropertyNameGenerator.Generate(_property);
+            // PT HACK - 
+            PropertyFullName = _settings.PropertyNameGenerator.Generate(_property.fullName);
+            // END PT HACK
         }
 
         /// <summary>Gets a value indicating whether the property has default value.</summary>
@@ -45,6 +48,11 @@ namespace NJsonSchema.CodeGeneration.Models
 
         /// <summary>Gets the name of the property.</summary>
         public string PropertyName { get; set; }
+
+        //PT HACK - den vollen namen in die "transverklasse" einbauen
+        /// <summary>Gets the fullName of the property.</summary>
+        public string PropertyFullName { get; set; }
+        //END PT HACK
 
         /// <summary>Gets the type name hint for the property.</summary>
         protected string GetTypeNameHint()

@@ -2,7 +2,7 @@
 <#if(Model.HasDescription){#>/** <#=Model.Description#> */
 <#}#>export class <#=Model.Class#><#=Model.Inheritance#> {<#foreach(var property in Model.Properties){#> 
 <#if(property.HasDescription){#>    /** <#=property.Description#> */
-<#}#>    <#if(property.IsReadOnly){#>readonly <#}#><#=property.PropertyName#><#if(property.IsOptional){#>?<#}#>: <#=property.Type#><#if(property.HasDefaultValue){#> = <#=property.DefaultValue#><#}#>;<#}#>
+<#}#>    <#if(property.IsReadOnly){#>readonly <#}#><#if(property.HasFullName){#><#=property.PropertyFullName#><#}else{#><#=property.PropertyName#><#}#><#if(property.IsOptional){#>?<#}#>: <#=property.Type#><#if(property.HasDefaultValue){#> = <#=property.DefaultValue#><#}#>;<#}#>
 
 <#if(Model.HasDiscriminator){#>
     protected _discriminator: string;

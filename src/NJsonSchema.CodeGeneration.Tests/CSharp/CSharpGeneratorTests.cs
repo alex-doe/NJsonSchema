@@ -161,9 +161,12 @@ namespace NJsonSchema.CodeGeneration.Tests.CSharp
 
         class CustomPropertyNameGenerator : IPropertyNameGenerator
         {
-            public string Generate(JsonProperty property)
-            {
-                return "MyCustom" + ConversionUtilities.ConvertToUpperCamelCase(property.Name, true);
+            public string Generate(JsonProperty property) {
+                return Generate(property.Name);
+            }
+
+            public string Generate(string propertyName) {
+                return "MyCustom" + ConversionUtilities.ConvertToUpperCamelCase(propertyName, true);
             }
         }
         class CustomTypeNameGenerator : ITypeNameGenerator

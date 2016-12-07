@@ -15,5 +15,13 @@ namespace NJsonSchema.CodeGeneration
         /// <param name="property">The property.</param>
         /// <returns>The new name.</returns>
         string Generate(JsonProperty property);
+
+
+        // PT HACK - die funktion um string erweitern
+        /// <summary>Generates the property name.</summary>
+        /// <param name="propertyName">The property.</param>
+        /// <returns>The new name.</returns>
+        string Generate(string propertyName);
+        //END PT HACK
     }
 }

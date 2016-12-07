@@ -30,6 +30,12 @@ namespace NJsonSchema
         [JsonProperty("discriminator", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate, Order = -100 + 5)]
         public string Discriminator { get; set; }
 
+        /// <summary>
+        /// PT HACK - Das JsonSwagger schema um das feld fullName erweitern. Damit die Swagger json-api definitionen den Fullname enthalten können
+        /// </summary>
+        [JsonProperty("fullName")]
+        public string fullName { get; internal set; }
+
         /// <summary>Gets the type name of the schema.</summary>
         /// <param name="typeNameGenerator">The type name generator.</param>
         /// <param name="typeNameHint">The type name hint.</param>

@@ -40,6 +40,11 @@ namespace NJsonSchema.CodeGeneration.TypeScript.Models
         /// <summary>Gets a value indicating whether the property has description.</summary>
         public bool HasDescription => !string.IsNullOrEmpty(Description);
 
+        //PT HACK - Helper for t4 Template if fullname is provided
+        /// <summary>Gets a value indicating whether the property has fullname</summary>
+        public bool HasFullName => !string.IsNullOrEmpty(PropertyFullName);
+        //END PT HACK
+
         /// <summary>Gets the description.</summary>
         public string Description => _property.Description;
 
@@ -71,7 +76,10 @@ namespace NJsonSchema.CodeGeneration.TypeScript.Models
                 {
                     return DataConversionGenerator.RenderConvertToClassCode(new DataConversionParameters
                     {
-                        Variable = typeStyle == TypeScriptTypeStyle.Class ? "this." + PropertyName : PropertyName + "_",
+                        //Variable = typeStyle == TypeScriptTypeStyle.Class ? "this." + PropertyName : PropertyName + "_", <-- Vor PT HACK
+                        //PT HACK - hier,wenn vorhanden, den fullName zum deserialisieren einfügen
+                        Variable = typeStyle == TypeScriptTypeStyle.Class ? "this." + (string.IsNullOrEmpty(PropertyFullName) ? PropertyName : PropertyFullName) : PropertyName + "_",
+                        //END PT HACK
                         Value = "data[\"" + _property.Name + "\"]",
                         Schema = _property.ActualPropertySchema,
                         IsPropertyNullable = _property.IsNullable(_settings.NullHandling),
@@ -95,7 +103,10 @@ namespace NJsonSchema.CodeGeneration.TypeScript.Models
                     return DataConversionGenerator.RenderConvertToJavaScriptCode(new DataConversionParameters
                     {
                         Variable = "data[\"" + _property.Name + "\"]",
-                        Value = typeStyle == TypeScriptTypeStyle.Class ? "this." + PropertyName : PropertyName + "_",
+                        //Value = typeStyle == TypeScriptTypeStyle.Class ? "this." + PropertyName : PropertyName + "_", <-- Vor PT HACK
+                        //PT HACK hier,wenn vorhanden, den fullName zum serialisieren einfügen
+                        Value = typeStyle == TypeScriptTypeStyle.Class ? "this." + (string.IsNullOrEmpty(PropertyFullName) ? PropertyName : PropertyFullName) : PropertyName + "_",
+                        //END PT HACK
                         Schema = _property.ActualPropertySchema,
                         IsPropertyNullable = _property.IsNullable(_settings.NullHandling),
                         TypeNameHint = PropertyName,

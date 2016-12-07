@@ -424,6 +424,13 @@ namespace NJsonSchema.Generation
                 var requiredAttribute = attributes.TryGetIfAssignableTo("System.ComponentModel.DataAnnotations.RequiredAttribute");
                 var jsonPropertyAttribute = attributes.OfType<JsonPropertyAttribute>().SingleOrDefault();
 
+                //PT HACK - zusätzlich wenn ein jsonproperty vorhanden ist wird der propertyname (ungekürzt) in das fullName Property geschrieben
+                if (jsonPropertyAttribute != null) {
+                    jsonProperty.fullName = property.Name;
+                }
+                //END PT HACK
+                parentSchema.Properties.Add(propertyName, jsonProperty); //<-- musste für den PT Hack aus Zeile 427 nach unten verschoben werden
+
                 var hasJsonNetAttributeRequired = jsonPropertyAttribute != null && (
                     jsonPropertyAttribute.Required == Required.Always ||
                     jsonPropertyAttribute.Required == Required.AllowNull);
